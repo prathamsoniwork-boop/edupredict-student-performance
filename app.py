@@ -22,6 +22,7 @@ app = Flask(
     static_folder=os.path.join(BASE_DIR, 'static')
 )
 app.secret_key = 'edupredict-ai-secret-key-2026'
+handler = app
 
 # Initialize database on startup
 database.init_db()
