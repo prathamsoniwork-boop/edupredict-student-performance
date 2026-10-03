@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+.venv/
+env/
+venv/
+.vercel
+mingit/
+edupredict-project.zip

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EduPredict – Student Performance Prediction System{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-brand">
+                <div class="nav-logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="nav-brand-text">
+                    <span class="nav-title">EduPredict</span>
+                    <span class="nav-tagline">AI Student Performance System</span>
+                </div>
+            </a>
+
+            <button class="nav-toggle-btn" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('index') }}" class="nav-link {% if request.path == '/' %}active{% endif %}">
+                        <i class="fa-solid fa-gauge-high"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('predict_page') }}" class="nav-link nav-cta-btn {% if request.path == '/predict' %}active{% endif %}">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Predict
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('model_performance') }}" class="nav-link {% if request.path == '/model-performance' %}active{% endif %}">
+                        <i class="fa-solid fa-chart-line"></i> Model Performance
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('student_insights') }}" class="nav-link {% if request.path == '/insights' %}active{% endif %}">
+                        <i class="fa-solid fa-chart-pie"></i> Student Insights
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('history_page') }}" class="nav-link {% if request.path == '/history' %}active{% endif %}">
+                        <i class="fa-solid fa-clock-rotate-left"></i> History
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('about') }}" class="nav-link {% if request.path == '/about' %}active{% endif %}">
+                        <i class="fa-solid fa-circle-info"></i> About
+                    </a>
+                </li>
+                <li>
+                    <span class="nav-badge" title="Trained Ensemble Model Online">
+                        <span class="pulse-dot"></span> ML Active
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- MAIN BODY -->
+    <main class="main-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <strong>EduPredict</strong> &copy; 2026 – AI-Powered Student Academic Performance Prediction System.
+                <div style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.2rem;">
+                    College Level Machine Learning Project | IBM Machine Learning Specialization
+                </div>
+            </div>
+            <div class="footer-tech-tags">
+                <span class="tech-tag"><i class="fa-brands fa-python"></i> Python 3</span>
+                <span class="tech-tag">Flask</span>
+                <span class="tech-tag">Scikit-Learn ML</span>
+                <span class="tech-tag">Pandas</span>
+                <span class="tech-tag">NumPy</span>
+                <span class="tech-tag">Random Forest</span>
+                <span class="tech-tag">Chart.js</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}About EduPredict – Architecture & ML Workflow{% endblock %}
+
+{% block content %}
+<div class="section-header" style="margin-bottom: 2rem;">
+    <div>
+        <h1 class="section-title"><i class="fa-solid fa-circle-info" style="color: var(--primary);"></i> About EduPredict System</h1>
+        <p class="section-desc">Design philosophy, Machine Learning pipeline architecture, and project technical overview.</p>
+    </div>
+</div>
+
+<!-- PROBLEM & SOLUTION CARDS -->
+<div class="grid-2" style="margin-bottom: 2.5rem;">
+    <!-- Problem Card -->
+    <div class="card" style="border-top: 4px solid var(--danger);">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+            <div class="kpi-icon-wrap kpi-icon-rose" style="width: 44px; height: 44px; font-size: 1.2rem;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2 style="font-size: 1.3rem; font-weight: 800;">The Problem</h2>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 1rem;">
+            Students frequently struggle academically due to an interwoven set of factors including declining attendance, irregular study habits, prior academic backlogs, poor sleep schedules, and limited learning resources.
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.65;">
+            In traditional university systems, academic difficulties are often detected only after midterm or semester-end exam results are declared, leaving little or no time for timely remedial intervention.
+        </p>
+    </div>
+
+    <!-- Solution Card -->
+    <div class="card" style="border-top: 4px solid var(--success);">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+            <div class="kpi-icon-wrap kpi-icon-green" style="width: 44px; height: 44px; font-size: 1.2rem;">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <h2 style="font-size: 1.3rem; font-weight: 800;">The Solution</h2>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 1rem;">
+            <strong>EduPredict</strong> harnesses Machine Learning algorithms (Random Forest Regressor) to analyze both academic markers and behavioral indicators in real time, estimating expected performance before exams occur.
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.65;">
+            The platform categorizes students into tiered support levels (<em>Excellent, Good, Average, At Risk</em>) and automatically generates tailored, non-judgmental recommendations to guide self-improvement and academic counseling.
+        </p>
+    </div>
+</div>
+
+<!-- MACHINE LEARNING WORKFLOW PIPELINE -->
+<div class="card" style="margin-bottom: 2.5rem;">
+    <div class="section-header">
+        <div>
+            <h3 class="section-title"><i class="fa-solid fa-diagram-project" style="color: var(--primary);"></i> Machine Learning Pipeline Workflow</h3>
+            <p class="section-desc">End-to-end lifecycle from data collection to real-time recommendation delivery</p>
+        </div>
+    </div>
+
+    <div class="workflow-track">
+        <!-- Step 1 -->
+        <div class="wf-step">
+            <div class="wf-step-num">1</div>
+            <div class="wf-step-title">Dataset</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">1,500 records with 11 features</div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="wf-step">
+            <div class="wf-step-num">2</div>
+            <div class="wf-step-title">Preprocessing</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Missing values & outlier handling</div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="wf-step">
+            <div class="wf-step-num">3</div>
+            <div class="wf-step-title">Encoding</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Categorical & ordinal transforms</div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="wf-step">
+            <div class="wf-step-num">4</div>
+            <div class="wf-step-title">Model Training</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Linear, Trees & Random Forest</div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="wf-step">
+            <div class="wf-step-num">5</div>
+            <div class="wf-step-title">Evaluation</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">MAE, MSE, RMSE, R² metrics</div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="wf-step">
+            <div class="wf-step-num">6</div>
+            <div class="wf-step-title">Prediction</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Expected score + confidence</div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="wf-step">
+            <div class="wf-step-num">7</div>
+            <div class="wf-step-title">Recommender</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Actionable study habits guidance</div>
+        </div>
+    </div>
+</div>
+
+<!-- TECHNOLOGIES STACK -->
+<div class="card" style="margin-bottom: 2.5rem;">
+    <div class="section-header">
+        <div>
+            <h3 class="section-title"><i class="fa-solid fa-cubes" style="color: var(--secondary);"></i> Technology Stack</h3>
+            <p class="section-desc">Industry-standard tools powering data science, model serving, and user experience</p>
+        </div>
+    </div>
+
+    <div class="grid-3" style="gap: 1.25rem;">
+        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+            <div style="font-size: 1.5rem; color: #3b82f6; margin-bottom: 0.5rem;"><i class="fa-brands fa-python"></i></div>
+            <h4 style="font-weight: 800; font-size: 1rem; margin-bottom: 0.25rem;">Python & Flask</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+                High-performance backend web framework providing REST API endpoints, session handling, and model inference orchestration.
+            </p>
+        </div>
+
+        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+            <div style="font-size: 1.5rem; color: #10b981; margin-bottom: 0.5rem;"><i class="fa-solid fa-gears"></i></div>
+            <h4 style="font-weight: 800; font-size: 1rem; margin-bottom: 0.25rem;">Data Science & ML</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+                <strong>Pandas & NumPy</strong> for vectorization and data manipulation; <strong>Scikit-Learn ML</strong> for regression pipelines, and <strong>Joblib</strong> for serialization.
+            </p>
+        </div>
+
+        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+            <div style="font-size: 1.5rem; color: #f59e0b; margin-bottom: 0.5rem;"><i class="fa-brands fa-js"></i></div>
+            <h4 style="font-weight: 800; font-size: 1rem; margin-bottom: 0.25rem;">Frontend & Visuals</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+                Semantic HTML5, custom responsive CSS3, vanilla JavaScript AJAX, and <strong>Chart.js</strong> for interactive visualizations.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- PRESENTATION GUIDE -->
+<div class="card" style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); color: white;">
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+        <i class="fa-solid fa-chalkboard-user" style="font-size: 1.5rem; color: #93c5fd;"></i>
+        <h3 style="font-size: 1.3rem; font-weight: 800;">Instructor Presentation & Viva Tips</h3>
+    </div>
+    <p style="font-size: 0.95rem; color: #dbeafe; line-height: 1.6; margin-bottom: 1.25rem;">
+        When demonstrating this project to a panel or professor, structure your explanation in 4 concise steps:
+    </p>
+    <ol style="padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem; color: #eff6ff;">
+        <li>
+            <strong>1. Explain the Motivation:</strong> State that traditional education is reactive; EduPredict makes academic support proactive through predictive machine learning.
+        </li>
+        <li>
+            <strong>2. Walk Through the ML Pipeline:</strong> Show the dataset (1,500 records), explain how categorical variables like parental support and device access were encoded, and why the 80/20 train-test split was used.
+        </li>
+        <li>
+            <strong>3. Justify Model Selection:</strong> Show the Model Performance page comparing Linear Regression, Decision Tree, and Random Forest across MAE, RMSE, and R². Highlight that Random Forest was chosen because it models non-linear interactions (e.g. sleep curve and attendance synergy) and provides feature importances.
+        </li>
+        <li>
+            <strong>4. Demonstrate Live Prediction:</strong> Use the "Recommended Demo" button to show live prediction, the circular score gauge, and the automated personalized recommendations.
+        </li>
+    </ol>
+</div>
+{% endblock %}

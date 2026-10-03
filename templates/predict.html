@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block title %}Predict Student Performance – EduPredict{% endblock %}
+
+{% block content %}
+<div class="section-header" style="margin-bottom: 2rem;">
+    <div>
+        <h1 class="section-title"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary);"></i> Student Performance Prediction</h1>
+        <p class="section-desc">Enter academic metrics and learning habits to estimate final score and generate personalized recommendations.</p>
+    </div>
+</div>
+
+<div class="prediction-layout">
+    <!-- LEFT COLUMN: INPUT FORM -->
+    <div class="form-card">
+        <!-- Demo Presets Bar -->
+        <div class="demo-preset-bar">
+            <span class="demo-preset-label">
+                <i class="fa-solid fa-bolt"></i> Quick Demo Profiles:
+            </span>
+            <div class="demo-buttons-group">
+                <button type="button" class="btn btn-primary btn-sm demo-preset-btn" data-preset="recommended" title="Standard sample with 4.5 hrs study, 88% attendance">
+                    <i class="fa-solid fa-star"></i> Recommended Demo
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm demo-preset-btn" data-preset="high_achiever">
+                    <i class="fa-solid fa-award"></i> High Achiever
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm demo-preset-btn" data-preset="average_student">
+                    <i class="fa-solid fa-user-graduate"></i> Average
+                </button>
+                <button type="button" class="btn btn-danger btn-sm demo-preset-btn" data-preset="at_risk_student">
+                    <i class="fa-solid fa-triangle-exclamation"></i> At-Risk
+                </button>
+            </div>
+        </div>
+
+        <form id="predictionForm">
+            <!-- Student Name / Identifier -->
+            <div class="form-group">
+                <label class="form-label" for="student_name">
+                    <span>Student Name / Identifier</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Optional</span>
+                </label>
+                <input type="text" class="form-control" id="student_name" name="student_name" placeholder="e.g. Alex Johnson or Student #1042" value="Aarav Patel">
+            </div>
+
+            <!-- 1. Study Hours Per Day -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span><i class="fa-solid fa-book-open" style="color: var(--primary);"></i> Study Hours Per Day</span>
+                    <span class="form-label-val" id="disp_study_hours">4.5 hrs</span>
+                </div>
+                <div class="input-slider-row">
+                    <input type="range" id="study_hours_slider" min="0" max="14" step="0.5" value="4.5">
+                    <input type="number" class="form-control" id="study_hours_num" name="study_hours_per_day" min="0" max="16" step="0.1" value="4.5" required>
+                </div>
+            </div>
+
+            <!-- 2. Attendance Percentage -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span><i class="fa-solid fa-calendar-check" style="color: var(--primary);"></i> Attendance Percentage</span>
+                    <span class="form-label-val" id="disp_attendance">88%</span>
+                </div>
+                <div class="input-slider-row">
+                    <input type="range" id="attendance_slider" min="0" max="100" step="1" value="88">
+                    <input type="number" class="form-control" id="attendance_num" name="attendance_percentage" min="0" max="100" step="0.5" value="88" required>
+                </div>
+            </div>
+
+            <!-- 3. Previous Exam Score -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span><i class="fa-solid fa-file-pen" style="color: var(--primary);"></i> Previous Exam Score (out of 100)</span>
+                    <span class="form-label-val" id="disp_prev_score">78</span>
+                </div>
+                <div class="input-slider-row">
+                    <input type="range" id="prev_score_slider" min="0" max="100" step="1" value="78">
+                    <input type="number" class="form-control" id="prev_score_num" name="previous_score" min="0" max="100" step="0.5" value="78" required>
+                </div>
+            </div>
+
+            <!-- 4. Assignment Completion Percentage -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Assignment Completion %</span>
+                    <span class="form-label-val" id="disp_assignment">92%</span>
+                </div>
+                <div class="input-slider-row">
+                    <input type="range" id="assignment_slider" min="0" max="100" step="1" value="92">
+                    <input type="number" class="form-control" id="assignment_num" name="assignment_completion" min="0" max="100" step="0.5" value="92" required>
+                </div>
+            </div>
+
+            <!-- 5. Sleep Hours Per Night -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span><i class="fa-solid fa-moon" style="color: var(--secondary);"></i> Sleep Hours Per Night</span>
+                    <span class="form-label-val" id="disp_sleep">7.0 hrs</span>
+                </div>
+                <div class="input-slider-row">
+                    <input type="range" id="sleep_slider" min="2" max="14" step="0.5" value="7.0">
+                    <input type="number" class="form-control" id="sleep_num" name="sleep_hours" min="2" max="16" step="0.1" value="7.0" required>
+                </div>
+            </div>
+
+            <!-- 6. Class Participation Score -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span><i class="fa-solid fa-comments" style="color: var(--secondary);"></i> Class Participation (Scale 1–10)</span>
+                    <span class="form-label-val" id="disp_participation">8 / 10</span>
+                </div>
+                <div class="input-slider-row">
+                    <input type="range" id="participation_slider" min="1" max="10" step="1" value="8">
+                    <input type="number" class="form-control" id="participation_num" name="class_participation" min="1" max="10" step="1" value="8" required>
+                </div>
+            </div>
+
+            <!-- 7. Number of Active Backlogs -->
+            <div class="form-group">
+                <div class="form-label">
+                    <span><i class="fa-solid fa-book-bookmark" style="color: var(--danger);"></i> Number of Previous Backlogs</span>
+                    <span class="form-label-val" id="disp_backlogs">0</span>
+                </div>
+                <div class="input-slider-row">
+                    <input type="range" id="backlogs_slider" min="0" max="10" step="1" value="0">
+                    <input type="number" class="form-control" id="backlogs_num" name="backlogs" min="0" max="15" step="1" value="0" required>
+                </div>
+            </div>
+
+            <!-- 8 & 9: Internet & Personal Device Availability -->
+            <div class="grid-2" style="margin-bottom: 1.35rem;">
+                <div>
+                    <label class="form-label">Internet Availability</label>
+                    <div class="segmented-control">
+                        <input type="radio" id="net_yes" name="internet_availability" value="Yes" checked>
+                        <label for="net_yes"><i class="fa-solid fa-wifi"></i> Yes</label>
+                        <input type="radio" id="net_no" name="internet_availability" value="No">
+                        <label for="net_no"><i class="fa-solid fa-ban"></i> No</label>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-label">Device Availability</label>
+                    <div class="segmented-control">
+                        <input type="radio" id="dev_yes" name="device_availability" value="Yes" checked>
+                        <label for="dev_yes"><i class="fa-solid fa-laptop"></i> Yes</label>
+                        <input type="radio" id="dev_no" name="device_availability" value="No">
+                        <label for="dev_no"><i class="fa-solid fa-ban"></i> No</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10 & 11: Extracurricular & Parental Support -->
+            <div class="grid-2" style="margin-bottom: 2rem;">
+                <div>
+                    <label class="form-label">Extracurricular Activity</label>
+                    <div class="segmented-control">
+                        <input type="radio" id="extra_yes" name="extracurricular_activity" value="Yes" checked>
+                        <label for="extra_yes"><i class="fa-solid fa-futbol"></i> Yes</label>
+                        <input type="radio" id="extra_no" name="extracurricular_activity" value="No">
+                        <label for="extra_no"><i class="fa-solid fa-circle-xmark"></i> No</label>
+                    </div>
+                </div>
+                <div>
+                    <label class="form-label">Parental Support</label>
+                    <div class="segmented-control">
+                        <input type="radio" id="par_high" name="parental_support" value="High" checked>
+                        <label for="par_high">High</label>
+                        <input type="radio" id="par_med" name="parental_support" value="Medium">
+                        <label for="par_med">Medium</label>
+                        <input type="radio" id="par_low" name="parental_support" value="Low">
+                        <label for="par_low">Low</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="predictSubmitBtn" class="btn btn-primary btn-lg" style="width: 100%;">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Predict Performance
+            </button>
+        </form>
+    </div>
+
+    <!-- RIGHT COLUMN: PREDICTION RESULT CARD -->
+    <div class="result-sticky-wrapper" id="predictionResultCard">
+        <div class="result-card">
+            <!-- Initial Empty State -->
+            <div id="resultEmptyState" class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h3 style="font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">No Prediction Generated Yet</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    Fill out the student parameters or click <strong>“Recommended Demo”</strong> above, then click <strong>“Predict Performance”</strong>.
+                </p>
+                <div style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-md); font-size: 0.82rem; text-align: left;">
+                    <strong><i class="fa-solid fa-lightbulb" style="color: var(--warning);"></i> Demonstration Tip:</strong>
+                    <div style="margin-top: 0.25rem;">Show your instructor how increasing study hours or clearing backlogs shifts the student between At Risk, Average, Good, and Excellent tiers.</div>
+                </div>
+            </div>
+
+            <!-- Prediction Result Details (Hidden until predicted) -->
+            <div id="resultDetails" style="display: none;">
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+                    Prediction Result
+                </div>
+
+                <!-- Animated Circular Gauge -->
+                <div class="score-gauge-box">
+                    <div class="score-circle" id="resultScoreCircle">
+                        <span class="score-number" id="resultScoreVal">0.0</span>
+                        <span class="score-max">OUT OF 100</span>
+                    </div>
+                    <div style="margin-top: 0.25rem;">
+                        <span id="resultCategoryBadge" class="badge badge-primary">Good</span>
+                    </div>
+                </div>
+
+                <!-- Performance Summary Text -->
+                <p id="resultSummary" style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;"></p>
+
+                <!-- Confidence Level -->
+                <div class="confidence-bar-wrap">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700;">
+                        <i class="fa-solid fa-shield-halved" style="color: var(--primary);"></i>
+                        <span>Model Confidence:</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div class="progress-track">
+                            <div class="progress-fill" id="resultConfidenceBar" style="width: 85%;"></div>
+                        </div>
+                        <span id="resultConfidenceVal" style="font-size: 0.88rem; font-weight: 800; font-family: monospace;">85.0%</span>
+                    </div>
+                </div>
+
+                <!-- Personalized Recommendations -->
+                <div class="recommendations-box">
+                    <div class="recommendations-header">
+                        <i class="fa-solid fa-compass" style="color: var(--primary);"></i>
+                        <span>Personalized Academic Recommendations</span>
+                    </div>
+                    <div id="resultRecommendationsList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="disclaimer-note">
+                    <i class="fa-solid fa-circle-info"></i> Note: These AI-driven suggestions are intended for academic study habit optimization and pedagogical guidance.
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: center;">
+                    <a href="{{ url_for('history_page') }}" class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-clock-rotate-left"></i> View in History Log
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

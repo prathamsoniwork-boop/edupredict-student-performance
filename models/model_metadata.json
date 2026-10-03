@@ -1,0 +1,246 @@
+{
+  "selected_model": "Random Forest Regressor",
+  "metrics": {
+    "mae": 3.35,
+    "mse": 18.455,
+    "rmse": 4.296,
+    "r2": 0.7733
+  },
+  "train_samples": 1200,
+  "test_samples": 300,
+  "total_samples": 1500,
+  "feature_columns": [
+    "study_hours_per_day",
+    "attendance_percentage",
+    "previous_score",
+    "assignment_completion",
+    "sleep_hours",
+    "class_participation",
+    "backlogs",
+    "internet_availability",
+    "device_availability",
+    "extracurricular_activity",
+    "parental_support"
+  ],
+  "feature_labels": {
+    "study_hours_per_day": "Study Hours/Day",
+    "attendance_percentage": "Attendance %",
+    "previous_score": "Previous Exam Score",
+    "assignment_completion": "Assignment Completion %",
+    "sleep_hours": "Sleep Hours/Night",
+    "class_participation": "Class Participation",
+    "backlogs": "Active Backlogs",
+    "internet_availability": "Internet Availability",
+    "device_availability": "Personal Device",
+    "extracurricular_activity": "Extracurriculars",
+    "parental_support": "Parental Support"
+  },
+  "feature_importance": [
+    {
+      "feature": "previous_score",
+      "label": "Previous Exam Score",
+      "importance": 30.86
+    },
+    {
+      "feature": "study_hours_per_day",
+      "label": "Study Hours/Day",
+      "importance": 24.42
+    },
+    {
+      "feature": "attendance_percentage",
+      "label": "Attendance %",
+      "importance": 13.19
+    },
+    {
+      "feature": "assignment_completion",
+      "label": "Assignment Completion %",
+      "importance": 9.74
+    },
+    {
+      "feature": "backlogs",
+      "label": "Active Backlogs",
+      "importance": 6.66
+    },
+    {
+      "feature": "sleep_hours",
+      "label": "Sleep Hours/Night",
+      "importance": 5.31
+    },
+    {
+      "feature": "parental_support",
+      "label": "Parental Support",
+      "importance": 4.2
+    },
+    {
+      "feature": "class_participation",
+      "label": "Class Participation",
+      "importance": 2.97
+    },
+    {
+      "feature": "internet_availability",
+      "label": "Internet Availability",
+      "importance": 1.14
+    },
+    {
+      "feature": "device_availability",
+      "label": "Personal Device",
+      "importance": 0.87
+    },
+    {
+      "feature": "extracurricular_activity",
+      "label": "Extracurriculars",
+      "importance": 0.65
+    }
+  ],
+  "model_comparison": [
+    {
+      "model_name": "Random Forest Regressor",
+      "mae": 3.35,
+      "mse": 18.455,
+      "rmse": 4.296,
+      "r2": 0.7733
+    },
+    {
+      "model_name": "Linear Regression",
+      "mae": 2.188,
+      "mse": 8.13,
+      "rmse": 2.851,
+      "r2": 0.9001
+    },
+    {
+      "model_name": "Decision Tree Regressor",
+      "mae": 4.886,
+      "mse": 36.205,
+      "rmse": 6.017,
+      "r2": 0.5552
+    }
+  ],
+  "actual_vs_predicted": {
+    "actual": [
+      80.5,
+      51.2,
+      57.5,
+      70.4,
+      50.3,
+      64.7,
+      54.6,
+      62.8,
+      59.8,
+      73.7,
+      61.5,
+      73.3,
+      69.5,
+      83.4,
+      69.0,
+      58.9,
+      82.2,
+      58.8,
+      70.2,
+      48.7,
+      77.1,
+      60.9,
+      55.0,
+      57.2,
+      81.6,
+      52.1,
+      59.5,
+      72.7,
+      60.8,
+      58.7,
+      52.5,
+      70.1,
+      59.6,
+      59.1,
+      79.7,
+      59.2,
+      71.7,
+      77.2,
+      60.7,
+      76.7,
+      59.7,
+      60.7,
+      56.0,
+      61.9,
+      47.1,
+      65.3,
+      67.7,
+      64.1,
+      67.4,
+      48.6
+    ],
+    "predicted": [
+      73.2,
+      59.5,
+      58.7,
+      74.0,
+      60.1,
+      62.7,
+      54.1,
+      57.1,
+      61.0,
+      75.7,
+      61.6,
+      75.2,
+      69.0,
+      77.6,
+      67.1,
+      57.3,
+      75.5,
+      59.1,
+      71.1,
+      50.9,
+      72.2,
+      66.4,
+      59.6,
+      58.1,
+      78.2,
+      57.8,
+      63.2,
+      68.3,
+      65.6,
+      59.3,
+      54.9,
+      68.1,
+      58.3,
+      62.0,
+      72.9,
+      62.6,
+      73.5,
+      74.0,
+      61.2,
+      75.0,
+      64.5,
+      63.7,
+      54.4,
+      56.6,
+      49.7,
+      67.1,
+      66.6,
+      63.6,
+      63.8,
+      53.8
+    ]
+  },
+  "model_comparison_charts": {
+    "labels": [
+      "Random Forest Regressor",
+      "Linear Regression",
+      "Decision Tree Regressor"
+    ],
+    "r2_scores": [
+      0.7733,
+      0.9001,
+      0.5552
+    ],
+    "mae_scores": [
+      3.35,
+      2.188,
+      4.886
+    ],
+    "rmse_scores": [
+      4.296,
+      2.851,
+      6.017
+    ]
+  }
+}

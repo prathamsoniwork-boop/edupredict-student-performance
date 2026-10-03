@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}EduPredict – AI-Powered Student Performance Prediction System{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+        <div class="hero-pill">
+            <i class="fa-solid fa-sparkles"></i> Machine Learning Project
+        </div>
+        <h1 class="hero-title">EduPredict</h1>
+        <h2 class="hero-subtitle">AI-Powered Student Performance Prediction System</h2>
+        <p class="hero-desc">
+            EduPredict uses Machine Learning to analyze academic and behavioral factors and estimate a student's expected academic performance. Identify at-risk students early and deliver actionable personalized recommendations.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('predict_page') }}" class="btn btn-white btn-lg">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Predict Student Performance
+            </a>
+            <a href="{{ url_for('model_performance') }}" class="btn btn-outline-white btn-lg">
+                <i class="fa-solid fa-chart-line"></i> View Model Performance
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- KPI METRIC CARDS -->
+<section class="kpi-grid">
+    <!-- Card 1: Total Dataset Records / Predictions -->
+    <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-icon-blue">
+            <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="kpi-meta">
+            <span class="kpi-label">Total Students Analyzed</span>
+            <span class="kpi-value">{{ dataset_summary.total_records }}</span>
+            <span class="kpi-subtext">{{ kpis.total_predictions }} live predictions logged</span>
+        </div>
+    </div>
+
+    <!-- Card 2: Average Predicted Score -->
+    <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-icon-green">
+            <i class="fa-solid fa-bullseye"></i>
+        </div>
+        <div class="kpi-meta">
+            <span class="kpi-label">Average Expected Score</span>
+            <span class="kpi-value">{{ kpis.average_score if kpis.total_predictions > 0 else dataset_summary.mean_score }} / 100</span>
+            <span class="kpi-subtext">Across student cohort</span>
+        </div>
+    </div>
+
+    <!-- Card 3: Model Accuracy / R² -->
+    <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-icon-purple">
+            <i class="fa-solid fa-brain"></i>
+        </div>
+        <div class="kpi-meta">
+            <span class="kpi-label">Model Accuracy (R² Score)</span>
+            <span class="kpi-value">
+                {% if metadata and metadata.metrics %}
+                    {{ (metadata.metrics.r2 * 100) | round(1) }}%
+                {% else %}
+                    77.3%
+                {% endif %}
+            </span>
+            <span class="kpi-subtext">{{ metadata.selected_model or 'Random Forest' }}</span>
+        </div>
+    </div>
+
+    <!-- Card 4: Students At Risk -->
+    <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-icon-rose">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div class="kpi-meta">
+            <span class="kpi-label">Students At Risk</span>
+            <span class="kpi-value">{{ kpis.at_risk_count }}</span>
+            <span class="kpi-subtext">Requiring early intervention (&lt;50)</span>
+        </div>
+    </div>
+</section>
+
+<!-- DASHBOARD CHARTS & PREVIEWS -->
+<div class="grid-2" style="margin-bottom: 2.5rem;">
+    <!-- Chart Preview Card -->
+    <div class="card">
+        <div class="section-header">
+            <div>
+                <h3 class="section-title"><i class="fa-solid fa-chart-column" style="color: var(--primary);"></i> Student Cohort Performance</h3>
+                <p class="section-desc">Distribution of students across academic standing categories</p>
+            </div>
+            <a href="{{ url_for('student_insights') }}" class="btn btn-secondary btn-sm">Full Analytics &rarr;</a>
+        </div>
+        <div class="chart-box">
+            <canvas id="homeCategoryChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Key Factors Preview -->
+    <div class="card">
+        <div class="section-header">
+            <div>
+                <h3 class="section-title"><i class="fa-solid fa-sliders" style="color: var(--secondary);"></i> Key Predictors of Success</h3>
+                <p class="section-desc">Top academic & behavioral factors identified by Random Forest</p>
+            </div>
+            <a href="{{ url_for('model_performance') }}" class="btn btn-secondary btn-sm">Importance Chart &rarr;</a>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1rem;">
+            {% if metadata and metadata.feature_importance %}
+                {% for feat in metadata.feature_importance[:4] %}
+                <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; margin-bottom: 0.3rem;">
+                        <span>{{ feat.label }}</span>
+                        <span style="color: var(--primary);">{{ feat.importance }}% impact</span>
+                    </div>
+                    <div class="progress-track" style="width: 100%; height: 8px;">
+                        <div class="progress-fill" style="width: {{ feat.importance * 3 }}%;"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">Loading feature importances...</p>
+            {% endif %}
+        </div>
+
+        <div style="background: var(--bg-main); border-radius: var(--radius-md); padding: 1rem; margin-top: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <strong style="font-size: 0.9rem;">Ready to evaluate a student?</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Instant score calculation + actionable feedback.</div>
+            </div>
+            <a href="{{ url_for('predict_page') }}" class="btn btn-primary btn-sm">Start Prediction</a>
+        </div>
+    </div>
+</div>
+
+<!-- RECENT PREDICTIONS LOG -->
+<section class="card">
+    <div class="section-header">
+        <div>
+            <h3 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: var(--primary);"></i> Recent Predictions</h3>
+            <p class="section-desc">Latest student evaluations processed by the Machine Learning model</p>
+        </div>
+        <a href="{{ url_for('history_page') }}" class="btn btn-secondary btn-sm">View Full History ({{ kpis.total_predictions }}) &rarr;</a>
+    </div>
+
+    {% if recent_predictions %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Student Name</th>
+                    <th>Study Hrs</th>
+                    <th>Attendance</th>
+                    <th>Prev Score</th>
+                    <th>Backlogs</th>
+                    <th>Expected Score</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pred in recent_predictions %}
+                <tr>
+                    <td style="color: var(--text-muted); font-size: 0.82rem;">{{ pred.created_at }}</td>
+                    <td><strong>{{ pred.student_name }}</strong></td>
+                    <td>{{ pred.study_hours }} hrs</td>
+                    <td>{{ pred.attendance }}%</td>
+                    <td>{{ pred.previous_score }}</td>
+                    <td>
+                        {% if pred.backlogs > 0 %}
+                            <span style="color: var(--danger); font-weight: 700;">{{ pred.backlogs }}</span>
+                        {% else %}
+                            <span style="color: var(--success); font-weight: 700;">0</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <strong style="font-size: 1.05rem; color: var(--text-main);">{{ pred.predicted_score }}</strong> / 100
+                    </td>
+                    <td>
+                        {% if pred.category == 'Excellent' %}
+                            <span class="badge badge-success">{{ pred.category }}</span>
+                        {% elif pred.category == 'Good' %}
+                            <span class="badge badge-primary">{{ pred.category }}</span>
+                        {% elif pred.category == 'Average' %}
+                            <span class="badge badge-warning">{{ pred.category }}</span>
+                        {% else %}
+                            <span class="badge badge-danger">{{ pred.category }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-state-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+        <h4>No predictions recorded yet</h4>
+        <p>Run your first prediction to see records stored here.</p>
+        <a href="{{ url_for('predict_page') }}" class="btn btn-primary" style="margin-top: 1rem;">Make First Prediction</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
